@@ -37,6 +37,7 @@
 #else
 #  include <QtPlatformHeaders/qxcbscreenfunctions.h>
 #endif
+#undef signals
 #include <gtk/gtk.h>
 #include <xcb/xcb.h>
 

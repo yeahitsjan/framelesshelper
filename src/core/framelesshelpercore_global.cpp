@@ -42,6 +42,7 @@
 #  include "registrykey_p.h"
 #endif
 #ifdef Q_OS_LINUX
+#undef signals
 #  include <gtk/gtk.h>
 #endif
 #include <QtCore/qmutex.h>
