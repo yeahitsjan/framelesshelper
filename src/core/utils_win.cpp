@@ -2847,7 +2847,7 @@ DpiAwareness Utils::getDpiAwarenessForCurrentProcess(bool *highest)
         }
         return result;
     }
-#if _UNUSUED
+#if _UNUSED
     if (API_USER_AVAILABLE(IsProcessDPIAware)) {
         const BOOL isAware = API_CALL_FUNCTION(IsProcessDPIAware);
         const auto result = ((isAware == FALSE) ? DpiAwareness::Unaware : DpiAwareness::System);
