@@ -130,7 +130,7 @@ if(NOT FRAMELESSHELPER_NO_BUNDLE_RESOURCE)
             PREFIX
                 "/org.wangwenx190.${PROJECT_NAME}"
             FILES
-                "resources/fonts/Micon.ttf"
+                "resources/fonts/MaterialIconsOutlined-Regular.otf"
                 "resources/images/noise.png"
         )
     else()

@@ -58,17 +58,17 @@ using namespace Global;
 struct FONT_ICON
 {
     quint32 segoe = 0;
-    quint32 micon = 0;
+    quint32 Fallback = 0;
 };
 
 static const QHash<int, FONT_ICON> g_fontIconsTable = {
     {static_cast<int>(SystemButtonType::Unknown), {0x0000, 0x0000}},
-    {static_cast<int>(SystemButtonType::WindowIcon), {0xE756, 0xEB06}},
-    {static_cast<int>(SystemButtonType::Help), {0xE897, 0xEC04}},
-    {static_cast<int>(SystemButtonType::Minimize), {0xE921, 0xEAE0}},
-    {static_cast<int>(SystemButtonType::Maximize), {0xE922, 0xEADE}},
-    {static_cast<int>(SystemButtonType::Restore), {0xE923, 0xEAE2}},
-    {static_cast<int>(SystemButtonType::Close), {0xE8BB, 0xEADA}}
+    {static_cast<int>(SystemButtonType::WindowIcon), {0xE756, 0xE069}},
+    {static_cast<int>(SystemButtonType::Help), {0xE897, 0xE877}},
+    {static_cast<int>(SystemButtonType::Minimize), {0xE921, 0xE15B}},
+    {static_cast<int>(SystemButtonType::Maximize), {0xE922, 0xF1CE}},
+    {static_cast<int>(SystemButtonType::Restore), {0xE923, 0xF1CF}},
+    {static_cast<int>(SystemButtonType::Close), {0xE8BB, 0xE5CD}}
 };
 #endif // FRAMELESSHELPER_CORE_NO_BUNDLE_RESOURCE
 
@@ -155,14 +155,14 @@ QString Utils::getSystemButtonIconCode(const SystemButtonType button)
 #  ifdef Q_OS_WINDOWS
     // Windows 11: Segoe Fluent Icons (https://docs.microsoft.com/en-us/windows/apps/design/style/segoe-fluent-icons-font)
     // Windows 10: Segoe MDL2 Assets (https://docs.microsoft.com/en-us/windows/apps/design/style/segoe-ui-symbol-font)
-    // Windows 7~8.1: Micon (http://xtoolkit.github.io/Micon/)
+    // Windows 7~8.1: Google Material Icons
     if (WindowsVersionHelper::isWin10OrGreater()) {
         return QChar(icon.segoe);
     }
 #  endif // Q_OS_WINDOWS
-    // We always use Micon on UNIX platforms because Microsoft doesn't allow distributing
+    // We always use Google Material Icons on UNIX platforms because Microsoft doesn't allow distributing
     // the Segoe icon font to other platforms than Windows.
-    return QChar(icon.micon);
+    return QChar(icon.Fallback);
 #endif // FRAMELESSHELPER_CORE_NO_BUNDLE_RESOURCE
 }
 
