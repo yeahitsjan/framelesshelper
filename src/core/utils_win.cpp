@@ -1859,7 +1859,7 @@ QColor Utils::getFrameBorderColor(const bool active)
         if (isFrameBorderColorized()) {
             return getDwmAccentColor();
         }
-        return (dark ? kDefaultFrameBorderActiveColor : kDefaultTransparentColor)
+        return (dark ? kDefaultFrameBorderActiveColor : kDefaultTransparentColor);
     } else {
         return (dark ? kDefaultFrameBorderInactiveColorDark : kDefaultFrameBorderInactiveColorLight);
     }
