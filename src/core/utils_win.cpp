@@ -1342,8 +1342,11 @@ QColor Utils::getDwmColorizationColor()
         if (!registry.isValid()) {
             return kDefaultDarkGrayColor;
         }
-        const DWORD value = registry.value<DWORD>(kColorizationColor).value_or(0);
-        return QColor::fromRgba(value);
+        const QVariant value = registry.value(kColorizationColor);
+        if (!value.isValid()) {
+            return kDefaultDarkGrayColor;
+        }
+        return QColor::fromRgba(qvariant_cast<DWORD>(value));
     };
     if (!API_DWM_AVAILABLE(DwmGetColorizationColor)) {
         return resultFromRegistry();
@@ -1854,10 +1857,9 @@ QColor Utils::getFrameBorderColor(const bool active)
     const bool dark = shouldAppsUseDarkMode();
     if (active) {
         if (isFrameBorderColorized()) {
-            return getDwmColorizationColor();
-        } else {
-            return kDefaultFrameBorderActiveColor;
+            return getDwmAccentColor();
         }
+        return (dark ? kDefaultFrameBorderActiveColor : kDefaultTransparentColor)
     } else {
         return (dark ? kDefaultFrameBorderInactiveColorDark : kDefaultFrameBorderInactiveColorLight);
     }
@@ -2526,14 +2528,21 @@ QColor Utils::getDwmAccentColor()
     // so we'd better also do the same thing.
     // There's no Windows API to get this value, so we can only read it
     // directly from the registry.
+    const QColor alternative = getDwmColorizationColor();
     const RegistryKey registry(RegistryRootKey::CurrentUser, dwmRegistryKey());
     if (!registry.isValid()) {
-        return kDefaultDarkGrayColor;
+        return alternative;
     }
-    const DWORD value = registry.value<DWORD>(kAccentColor).value_or(0);
+    const QVariant value = registry.value(kAccentColor);
+    if(!value.isValid()) {
+        return alternative;
+    }
     // The retrieved value is in the #AABBGGRR format, we need to
     // convert it to the #AARRGGBB format that Qt accepts.
-    const QColor abgr = QColor::fromRgba(value);
+    const QColor abgr = QColor::fromRgba(qvariant_cast<DWORD>(value));
+    if (!abgr.isValid()) {
+        return alternative;
+    }
     return QColor(abgr.blue(), abgr.green(), abgr.red(), abgr.alpha());
 }
 
