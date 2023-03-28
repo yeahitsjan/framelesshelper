@@ -75,8 +75,10 @@ private:
     QPointer<QWidget> m_targetWidget;
     QPointer<QScreen> m_screen;
 #else
-    QPointer<QWidget> m_targetWidget = nullptr;
-    QPointer<QScreen> m_screen = nullptr;
+    // @yeahitsjan: it seems like that the bug isn't fixed or atleast misunderstood. Documentation
+    // says that QPointers are automatically constructed with nullptr.
+    QPointer<QWidget> m_targetWidget;
+    QPointer<QScreen> m_screen;
 #endif
     bool m_micaEnabled = false;
     QScopedPointer<MicaMaterial> m_micaMaterial;
